@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>stop-goon</title>
+    <link rel="stylesheet" href="../iconfont/iconfont.css">
+
+    <style>
+        body {
+            font-family: "微软雅黑";
+        }
+
+        button {
+            font-size: 12px;
+            font-family: "微软雅黑";
+        }
+
+        .line {
+            background-color: #ccc;
+            height: 2px;
+            width: 200px;
+            margin: 50px;
+        }
+
+        .back {
+            background-color: red;
+            height: 100%;
+            width: 60px;
+        }
+
+        .on-off {
+            font-family: iconfont;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="on-off play icon-play"></button>
+
+    <button class="replay">重新播放</button>
+    <button class="change">换一曲</button>
+    <audio id="music" controls="controls" src="../MP3/music (1).mp3">
+    </audio>
+
+
+    <div class="line">
+        <div class="back"></div>
+    </div>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js "></script>
+    <script>
+        var audio = $('#music')[0],
+            audioJQ = $('#music'),
+            replay = $('.replay'),
+            change = $('.change'),
+            onoff = $('.on-off');
+
+        onoff.on('click', function() {
+            var _this = $(this);
+            if (audio.paused) { // 暂停播放的时候
+                audio.play();
+                if (_this.hasClass('icon-play')) {
+                    _this.removeClass('icon-play');
+                }
+                _this.addClass('icon-pause');
+                audio.autoplay = "autoplay";
+            } else {
+                audio.pause();
+                if (_this.hasClass('icon-pause')) {
+                    _this.removeClass('icon-pause');
+                }
+                _this.addClass('icon-play');
+            }
+
+
+        })
+
+
+
+        replay.on('click', function() {
+            audio.currentTime = 0;
+            audio.play();
+        })
+
+        change.on('click', function() {
+            audio.src = "../MP3/music (2).mp3";
+            audio.load();
+        })
+
+        audioJQ.on('ended', function() {
+            audio.src = "../MP3/music (2).mp3";
+            audio.load();
+        })
+
+
+
+        // function $(str) {
+        //     return document.querySelector(str);
+        // }
+        //
+        // function $$(str) {
+        //     return document.querySelectorAll(str);
+        // }
+    </script>
+</body>
+
+</html>
+
+</html>

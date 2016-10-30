@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>progress bar</title>
+    <style>
+        body {
+            background-color: #333;
+        }
+
+        .clearfix:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .panel {
+            position: relative;
+            width: 300px;
+            height: 480px;
+            background-color: #292a2d;
+        }
+
+        .progress {
+            position: absolute;
+            bottom: 90px;
+            left: 12px;
+            width: 276px;
+            height: 14px;
+            background-color: #292a2d;
+        }
+
+        .progress .box-time {
+            height: 100%;
+            width: 30px;
+            font-family: Arial;
+            font-size: 12px;
+            font-weight: 100;
+            /*letter-spacing: 1px;*/
+            color: #fff;
+        }
+
+        .progress .current-time {
+            float: left;
+            padding-right: 8px;
+            text-align: right;
+        }
+
+        .progress .full-time {
+            float: left;
+            padding-left: 8px;
+            text-align: left;
+        }
+
+        .progress .progress-bar {
+            float: left;
+            margin: 6px auto;
+            width: 200px;
+            height: 2px;
+            background-color: #ccc;
+        }
+
+        .progress .progress-bar .current-bar {
+            position: relative;
+            background-color: red;
+            height: 100%;
+            width: 0;
+        }
+
+        .progress .progress-bar .current-bar .progress-ctrl {
+            position: absolute;
+            top: -3px;
+            right: -4px;
+            cursor: pointer;
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background-color: #fff;
+            box-shadow: 0 0 10px #fff;
+        }
+
+        .test {
+            padding-left: 20px;
+            font-family: '等线';
+            font-size: 14px;
+            width: 100px;
+            height: 32px;
+            float: left;
+        }
+
+        .test1 {
+            background-color: #fff;
+            color: #333;
+        }
+
+        .test2 {
+            background-color: #292a2d;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="music" controls="controls" src="../MP3/music (1).mp3">
+    </audio>
+    <div class="panel">
+        <div class="test test1">0:00 / 4:59</div>
+        <div class="test test2">0:00 / 4:59</div>
+        <div class="progress clearfix">
+            <div class="box-time current-time">0:00</div>
+            <div class="progress-bar">
+                <div class="current-bar">
+                    <div class="progress-ctrl"></div>
+                </div>
+            </div>
+            <div class="box-time full-time">0:00</div>
+        </div>
+    </div>
+
+
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js "></script>
+    <script>
+        var audio = $('#music')[0],
+            audioJQ = $('#music');
+
+        audioJQ.on('play', function() {
+            audio.autoplay = 'autoplay';
+            var fullTime = audio.duration;
+            clock1 = setInterval(function() {
+                var currentTime = audio.currentTime;
+                var currentWidth = parseInt(currentTime / fullTime * 200) + 'px';
+                $('.progress .current-time').text(timeFormat(currentTime));
+                $('.progress .progress-bar .current-bar').width(currentWidth);
+            }, 1000)
+            $('.progress .full-time').text(timeFormat(fullTime));
+        })
+
+        audioJQ.on('pause', function() {
+            clearInterval(clock1);
+        })
+
+        function timeFormat(num) {
+            var fullSec = parseInt(num);
+            var min = parseInt(fullSec / 60) + '';
+            var sec = (fullSec % 60);
+            if (sec < 10) {
+                sec = '0' + sec;
+            } else {
+                sec = sec + '';
+            }
+            var timeStr = min + ':' + sec;
+            return timeStr;
+        }
+        audioJQ.on('ended', function() {
+            console.log(1);
+            setTimeout(function() {
+                console.log(2)
+                audio.src = "../MP3/music (2).mp3";
+                audio.load();
+            }, 1000)
+        })
+    </script>
+
+</body>
+
+</html>

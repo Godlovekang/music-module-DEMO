@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>move</title>
+
+    <style>
+        body {
+            /*background-color: #292a2d;*/
+        }
+
+        .move-bar {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            width: 48px;
+            height: 30px;
+            background-color: #292a2d;
+            color: #fff;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        .progress {
+            position: relative;
+            margin: 150px;
+            width: 200px;
+            height: 6px;
+            background-color: #292a2d;
+            overflow: hidden;
+        }
+
+        .progress .current-bar {
+            position: absolute;
+            top: 2px;
+            width: 200px;
+            height: 2px;
+            background-color: #888;
+        }
+
+        .progress-ctrl {
+            position: absolute;
+            left: 50px;
+            height: 6px;
+            width: 6px;
+            border-radius: 3px;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        .progress-ctrl .progress-line {
+            position: absolute;
+            right: 6px;
+            top: 2px;
+            width: 210px;
+            height: 2px;
+            background-color: red;
+            cursor: auto;
+        }
+
+        .move-bar {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            width: 48px;
+            height: 30px;
+            background-color: #292a2d;
+            color: #fff;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        .volume {
+            position: relative;
+            margin: 150px;
+            width: 200px;
+            height: 6px;
+            background-color: #292a2d;
+            overflow: hidden;
+        }
+
+        .volume .full-volume {
+            position: absolute;
+            top: 2px;
+            width: 200px;
+            height: 2px;
+            background-color: #888;
+        }
+
+        .volume-ctrl {
+            position: absolute;
+            left: 50px;
+            height: 6px;
+            width: 6px;
+            border-radius: 3px;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        .volume-ctrl .volume-line {
+            position: absolute;
+            right: 6px;
+            top: 2px;
+            width: 210px;
+            height: 2px;
+            background-color: red;
+            cursor: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="music" controls="controls" src="../MP3/music (1).mp3">
+    </audio>
+    <div class="move-bar"></div>
+
+
+
+
+
+
+
+    <!-- 播放进度 -->
+    <div class="progress clearfix">
+        <div class="progress-bar">
+            <div class="current-bar">
+            </div>
+            <div class="progress-ctrl">
+                <div class="progress-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 音量控制 -->
+    <div class="volume clearfix">
+        <div class="volume-bar">
+            <div class="full-volume">
+            </div>
+            <div class="volume-ctrl">
+                <div class="volume-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js "></script>
+    <script src="../draggabilly/draggabilly.js"></script>
+    <script>
+        var audio = $('#music')[0],
+            audioJQ = $('#music'),
+            moveBar = $('.move-bar'),
+            progressCtrl = $('.progress-ctrl');
+
+
+        var $dragBar = moveBar.draggabilly({});
+        var $dragCtrl = progressCtrl.draggabilly({
+            axis: 'x',
+            containment: true
+        });
+
+        var mouseDown = false;
+        moveBar.on('mousedown', function(e) {
+            mouseDown = true;
+        })
+        moveBar.on('mouseup', function() {
+            mouseDown = false;
+        })
+        moveBar.on('click', function() {
+            if (!mouseDown) {
+                console.log('1');
+            }
+        })
+
+        audioJQ.on('ended', function() {
+            audio.src = "../MP3/music (2).mp3";
+            audio.load();
+        })
+    </script>
+</body>
+
+</html>
